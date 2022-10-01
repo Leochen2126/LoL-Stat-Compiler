@@ -2,8 +2,8 @@
 const e = require("express");
 const { MongoClient } = require("mongodb");
 // Server path
-const url = 'mongodb://localhost:27017/';
-  
+//const url = 'mongodb://localhost:27017/';
+const url = 'mongodb+srv://dev:dev@lolstat.5fif06n.mongodb.net/?retryWrites=true&w=majority'
 // Name of the database
 const dbname = "conFusion";
   
