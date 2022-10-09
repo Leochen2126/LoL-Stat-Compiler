@@ -1,26 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from 'react'
 
-function sayHello() {
-  alert('You clicked me!');
-}
 function App() {
+  const [backendData, setBackendData] = useState([{}])
+  async function addCount() {
+    //alert('You clicked me!');
+    await fetch("/addcouter", {method: 'POST'})
+    fetch("/couter").then(
+      response => response.json()
+    ).then(
+      data => {
+        setBackendData(data)
+      }
+    )
+  }
+  useEffect( () => {
+    fetch("/couter").then(
+      response => response.json()
+    ).then(
+      data => {
+        setBackendData(data)
+      }
+    )
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>this.backendData</code> and save to reload.
         </p>
-        {/* <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-        <button onClick={sayHello}>Default</button>
+        <h3>{backendData.users}</h3>
+
+        <button onClick={() => addCount()}>Default</button>
       </header>
     </div>
   );
