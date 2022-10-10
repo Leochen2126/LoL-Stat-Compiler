@@ -1,20 +1,68 @@
 const { MongoClient } = require("mongodb");
 const url = 'mongodb+srv://dev:dev@lolstat.5fif06n.mongodb.net/?retryWrites=true&w=majority'
 
-async function registerAccount(username, password, data, client) {
-    // access DB to check if account already exists
-    var acc = { id:await getNextID(data),username: username, password: password, roster:[] };
-    data.collection("Account").insertOne(acc, function(err, res) {
-        if (err) throw err;
-            console.log("Account with username: " +username+" has been registered");
-            client.close();
+async function registerAccount(username, password, client) {
+    return new Promise(async (resolve) => {
+        var data = client.db("lolstats");
+        // access DB to check if account already exists
+        var myquery = { username: username };
+        await data.collection("Account").findOne(myquery, async function(err, result) {
+            if (err) throw err;
+            // if username account doesn't exist yet
+            if(!result){
+                // create the acc and add to DB
+                var acc = { id:await getNextID(data),username: username, password: password, roster:[] };
+                await data.collection("Account").insertOne(acc, function(err, res) 
+                {
+                    if (err) throw err;
+                    console.log("Account with username: " +username+" has been registered");
+                    resolve("Successfully registered");
+                    // client.close();
+                });
+            }
+            // account already exist
+            else{
+                console.log("ERROR: Username already taken, try another");
+                resolve("ERROR: Username already taken, try another");
+            }
+        });
     });
 }
+
+async function verifyUsernameAndPassword(username, password, client){
+    return new Promise(async (resolve) => {
+        var data = client.db("lolstats");
+        var myquery = { username: username };
+        await data.collection("Account").findOne(myquery, async function(err, result) {
+            if (err) throw err;
+            // if username account doesn't exist yet
+            if(!result){
+                console.log("Wrong username/password");
+                resolve("Wrong username/password");
+            }
+            else{
+                // check if password matches
+                if(result.password == password){
+                    console.log("Successful login");
+                    resolve("Successful login");
+                }
+                else{
+                    console.log("Wrong username/password");
+                    resolve("Wrong username/password");
+                }
+            }
+        });
+    });
+}
+
+
+
+
 async function getNextID(data){
     var count = await data.collection("Account").find({}).count();
     return count;
 }
-module.exports = {registerAccount,  addOneCounter, fetchCounter, test};
+module.exports = {registerAccount, verifyUsernameAndPassword, addOneCounter, fetchCounter, test};
 
 //await testing lol
 function test() {

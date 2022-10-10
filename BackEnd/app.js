@@ -47,6 +47,21 @@ MongoClient.connect(url, async (err,client)=>{
         //     cert: fs.readFileSync('server.cert')
         //   }, app)
         //   .listen(3000, () => {console.log("3000");})
+
+
+        app.post("/register_account", (req,res) => {
+            var username = req.params["username"];
+            var password = req.params["password"];
+            var result = accManager.registerAccount(username, password, client);
+            res.send(result);
+        });
+        
+        app.post("/login", (req,res) => {
+            var username = req.params["username"];
+            var password = req.params["password"];
+            var result = accManager.verifyUsernameAndPassword(username, password, client);
+            res.send(result);
+        });
     }
     else
         console.log("Error in the connectivity");
