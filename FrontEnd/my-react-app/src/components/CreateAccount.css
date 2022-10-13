@@ -1,0 +1,10 @@
+.form {
+    flex-direction: column;
+    height: 1000px;
+    display: flex;
+    width: 500px;
+    margin-top: 50px;
+}
+.label {
+    padding-top: 50px;
+}
