@@ -1,5 +1,6 @@
 import { useState } from "react";
 //import { ReactDOM } from "react";
+import { useNavigate } from "react-router-dom";
 import './CreateAccount.css';
 
 function CreateAccount() {
@@ -28,6 +29,11 @@ function CreateAccount() {
             onChange={(e) => setPasswordConfirmation(e.target.value)}
             />
             <p><a href="https://www.w3.org/">Already have an account? Click here to login</a></p>
+            <div className="form-group">
+            <button className="btn btn-primary btn-block">
+              <span>Login</span>
+            </button>
+          </div>
         </form>
     )
 }

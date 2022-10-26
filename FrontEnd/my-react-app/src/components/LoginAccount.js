@@ -4,8 +4,9 @@ import './LoginAccount.css';
 function LoginAccount() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const handleLogin = (e) => { console.log("hi"); }
     return (
-        <form className = "form">
+        <form onSubmit={handleLogin} className = "form">
             <h3>Login</h3>
             <label className="label">Username</label>
             <input
@@ -20,6 +21,9 @@ function LoginAccount() {
             onChange={(e) => setPassword(e.target.value)}
             />
             <p><a href="https://www.w3.org/">W3C</a></p>
+            <button className="btn btn-primary btn-block">
+              <span>Login</span>
+            </button>
         </form>
     )
 }
