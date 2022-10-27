@@ -104,6 +104,7 @@ exports.signin = (req, res) => {
         email: user.email,
         roles: authorities,
       });
+      console.log(user.username + " has signed in");
     });
 };
 
