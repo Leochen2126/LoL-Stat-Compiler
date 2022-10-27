@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import AuthService from "./services/auth.service";
 
 import Login from "./components/Login";
@@ -50,7 +50,8 @@ const App = () => {
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
-          LoL Stat-Tracker
+        <i class="bi bi-graph-up"></i>
+        { " LoL Team Tracker " }
         </Link>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
